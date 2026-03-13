@@ -85,7 +85,7 @@ export default function Patient({ loaderData }: Route.ComponentProps) {
   return (
     <div className="py-4 px-8">
       <h1 className="text-4xl font-bold my-8">Patients</h1>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-start gap-3 mb-4">
         <div>
           <input
             type="text"

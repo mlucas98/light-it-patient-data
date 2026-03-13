@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Patient } from "~/types/interfaces";
 import AvatarComponent from "../AvatarComponent";
 import { CheckCircle2 } from "lucide-react";
+import SpinnerComponent from "../SpinnerComponent";
 
 type Props = {
   patient?: Patient;
@@ -88,7 +89,7 @@ export default function PatientForm({
 
       <input type="hidden" value={intent} name="intent" />
 
-      <div className="flex gap-x-5">
+      <div className="flex flex-col md:flex-row items-center gap-x-5">
         <div className="my-auto">
           <AvatarComponent src={patient?.avatar} alt={patient?.name} />
         </div>
@@ -144,11 +145,13 @@ export default function PatientForm({
           disabled={fetcher.state === "submitting"}
           className="w-full bg-violet-600 text-white py-2 rounded hover:bg-violet-700 disabled:opacity-50"
         >
-          {fetcher.state === "submitting"
-            ? "Saving..."
-            : intent === "create"
-              ? "Create patient"
-              : "Save changes"}
+          {fetcher.state === "submitting" ? (
+            <SpinnerComponent />
+          ) : intent === "create" ? (
+            "Create patient"
+          ) : (
+            "Save changes"
+          )}
         </button>
       </div>
     </form>

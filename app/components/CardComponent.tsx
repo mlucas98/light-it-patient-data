@@ -23,21 +23,37 @@ export default function CardComponent({ patient }: CardProps) {
           onClick={() => setOpen(!open)}
         >
           <AvatarComponent src={avatar} alt={name} />
-          <div className="ml-4 flex-1">
-            <div className="font-semibold text-slate-900">{name}</div>
+          <div className="ml-4 flex-1 min-w-0">
+            <div className="font-semibold text-slate-900 truncate">{name}</div>
+
             <div className="flex items-center text-sm text-slate-500">
               <span>#{id}</span>
-              <Pencil
-                className="ml-2 w-4 h-4 text-violet-600 hover:text-violet-800"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setOpenModal(true);
-                }}
-              />
+              <div className="hidden md:inline">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpenModal(true);
+                  }}
+                  className="ml-2 p-2 rounded hover:bg-slate-100"
+                >
+                  <Pencil className="w-4 h-4 text-violet-600  hover:text-violet-800" />
+                </button>
+              </div>
             </div>
           </div>
+          <div className="ml-auto mr-2 inline md:hidden">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenModal(true);
+              }}
+              className="p-2 rounded hover:bg-slate-100"
+            >
+              <Pencil className="w-4 h-4 text-violet-600  hover:text-violet-800" />
+            </button>
+          </div>
 
-          <div className="text-slate-500">
+          <div className="ml-auto text-slate-500 shrink-0">
             <ChevronDown
               size={20}
               className={`transition-transform ${open ? "rotate-180" : ""}`}

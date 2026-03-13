@@ -10,7 +10,7 @@ export default function AvatarComponent({ src, alt = "Avatar" }: AvatarProps) {
   const [error, setError] = useState(false);
 
   return (
-    <div className="relative w-12 h-12">
+    <div className="relative w-10 h-10 md:w-12 md:h-12">
       {/* fallback por si falla la imagen*/}
       <div className="absolute inset-0 flex items-center justify-center rounded-full bg-slate-200 text-slate-500">
         <User size={20} />
@@ -20,7 +20,7 @@ export default function AvatarComponent({ src, alt = "Avatar" }: AvatarProps) {
         <img
           src={src}
           alt={alt}
-          className="w-12 h-12 rounded-full object-cover relative z-10"
+          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover relative z-10"
           onError={() => {
             console.log("error al cargar imagen");
             setError(true);
