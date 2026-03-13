@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
@@ -7,7 +8,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
-  // Futuro login
-  return <h1>Hola Mundo</h1>;
+export default function loader() {
+  return redirect("/patients");
 }

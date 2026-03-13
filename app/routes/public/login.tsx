@@ -1,4 +1,22 @@
-import { Form, useActionData } from "react-router";
+import { Form, redirect, useActionData } from "react-router";
+
+export async function action({ request }: { request: Request }) {
+  const formData = await request.formData();
+
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  // Simular validación de credenciales
+  if (email === "jdoe@example.com" && password === "test123") {
+    return redirect("/patients", {
+      headers: {
+        "Set-Cookie": "lightItCookie=true; Path=/;",
+      },
+    });
+  }
+
+  return "Invalid credentials";
+}
 
 export default function Login() {
   const error = useActionData();
