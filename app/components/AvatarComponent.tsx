@@ -1,32 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "lucide-react";
 
 type AvatarProps = {
-  src?: string | null;
+  src: string;
   alt?: string;
 };
 
 export default function AvatarComponent({ src, alt = "Avatar" }: AvatarProps) {
-  const [error, setError] = useState(false);
+  const [validSrc, setValidSrc] = useState<string | null>(null);
 
-  return (
-    <div className="relative w-10 h-10 md:w-12 md:h-12">
-      {/* fallback por si falla la imagen*/}
-      <div className="absolute inset-0 flex items-center justify-center rounded-full bg-slate-200 text-slate-500">
+  useEffect(() => {
+    if (!src) {
+      setValidSrc(null);
+      return;
+    }
+
+    const img = new Image();
+
+    img.onload = () => {
+      setValidSrc(src);
+    };
+
+    img.onerror = () => {
+      console.log("Avatar failed", src);
+      setValidSrc(null);
+    };
+
+    img.src = src;
+  }, [src]);
+
+  if (!validSrc) {
+    return (
+      <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-slate-200 text-slate-500">
         <User size={20} />
       </div>
-      {/* revisar por que no toma el error de la página */}
-      {/* {src && !error && (
-        <img
-          src={src}
-          alt={alt}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover relative z-10"
-          onError={() => {
-            console.log("error al cargar imagen");
-            setError(true);
-          }}
-        />
-      )} */}
-    </div>
+    );
+  }
+
+  return (
+    <img
+      src={validSrc}
+      alt={alt}
+      loading="lazy"
+      className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+    />
   );
 }
